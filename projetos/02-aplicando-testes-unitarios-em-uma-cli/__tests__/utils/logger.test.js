@@ -1,34 +1,34 @@
-// Importa função a ser testada e as ROLES
-import logger from 'utils/logger.js';
+import logger from '../../src/utils/logger'
 
-// Cria espiões para verificar as chamadas de console.log e console.error
-const spies = {
-  log: jest.spyOn(console, 'log').mockImplementation(),
-  error: jest.spyOn(console, 'error').mockImplementation()
-};
+const spyLog = jest.spyOn(console, 'log').mockImplementation()
+const spyLogError = jest.spyOn(console, 'error').mockImplementation()
 
-// Testes :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-describe('Logger', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
+beforeEach(() => {
+  // spyLog.mockClear()
+  // spyLogError.mockClear()
+  jest.clearAllMocks()
+})
+afterAll(() => {
+  console.log('não funciona')
+  jest.restoreAllMocks()
+  console.log('isso funciona')
+})
+
+describe('Logger File', () => {
+
+  it('Funções de logging: log', () => {
+    logger.log('teste')
+
+    expect(spyLog).toHaveBeenCalledTimes(1);
   });
+  it('Funções de logging: success', () => {
+    logger.success('teste')
 
-  afterAll(() => {
-    jest.restoreAllMocks();
+    expect(spyLog).toHaveBeenCalledTimes(1);
   });
+  it('Funções de logging: error', () => {
+    logger.error('teste')
 
-  it('Deve executar console.log ao chamar a função log', () => {
-    logger.log('teste');
-    expect(spies.log).toHaveBeenCalledTimes(1);
-  });
-
-  it('Deve executar console.log ao chamar a função success', () => {
-    logger.success('teste');
-    expect(spies.log).toHaveBeenCalledTimes(1);
-  });
-
-  it('Deve executar console.error ao chamar a função log', () => {
-    logger.error('teste');
-    expect(spies.error).toHaveBeenCalledTimes(1);
+    expect(spyLogError).toHaveBeenCalledTimes(1);
   });
 });
