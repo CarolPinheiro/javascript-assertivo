@@ -1,13 +1,13 @@
 import { toJSON } from '../database/parser.js';
 
 // Mensagens de validação
-const MESSAGES = {
+export const MESSAGES = {
   missingArgs: () => 'Você precisa fornecer os argumentos corretos para a CLI',
   missingArg: arg => `Você precisa informar o argumento ${arg}`
 };
 
 // Cria resultado de validação com mensagem
-const reportValidation = ({ message = '', valid = false}) => ({
+const reportValidation = ({ message = '', valid = false }) => ({
   message,
   valid,
 });
@@ -40,10 +40,10 @@ const formatArg = ([firstDash, secondDash, ...rest]) => {
 };
 
 // Combina todos os argumentos em um único objeto
-const combineArgs = (args) => args.reduce((args, arg) => ({...args, ...arg}), {});
+const combineArgs = (args) => args.reduce((args, arg) => ({ ...args, ...arg }), {});
 
 // Faz o parse de args, pulando os dois primeiros valores que são do binário do node e da aplicação CLI
-export default function parse ([_env, _bin, ...cliArgs]) {
+export default function parse([_env, _bin, ...cliArgs]) {
   const formatted = cliArgs.map(formatArg);
   const parsed = combineArgs(formatted);
 
